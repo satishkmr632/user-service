@@ -20,7 +20,7 @@ async def read_root() -> dict[str, str]:
     """
     Hello World
     """
-    return {"Hello": "World.."}
+    return {"Hello": "World..1"}
 
 @router.post("/", response_model=UserRead)
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
