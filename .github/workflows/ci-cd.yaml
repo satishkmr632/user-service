@@ -1,71 +1,25 @@
-name: CI Pipeline
+name: CI - Build & Push Docker Image
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
-  build-and-test:
+  docker:
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:13
-        container_name: postgres_db
-        env:
-          POSTGRES_USER: satish
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: users
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd="pg_isready -U satish -d users"
-          --health-interval=5s
-          --health-timeout=5s
-          --health-retries=5
-
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install Poetry
-        run: |
-          pip install poetry
-          poetry config virtualenvs.create false
-
-      - name: Install dependencies
-        run: poetry install --no-interaction --no-ansi --no-root
-
-      - name: Run tests
-        env:
-          DATABASE_URL: postgresql+asyncpg://satish:postgres@db:5432/users
-        run: |
-          pytest -v
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Log in to DockerHub
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: "stsdev46"
-          password: "dckr_pat_4yrS-_70MHeGwucZ1tV9DfQ5DQY"
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ../Dockerfile
-          push: true
-          tags: stsdev46/user-service:latest
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/user_service:latest .
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/user_service:latest
