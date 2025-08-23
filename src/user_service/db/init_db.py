@@ -1,0 +1,1 @@
+# Here we can create default user or anything that require immediete creation (Optional).
