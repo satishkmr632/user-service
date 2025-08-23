@@ -22,8 +22,10 @@ jobs:
       # Step 3: Install dependencies
       - name: Install Dependencies
         run: |
-          pip install -r requirements.txt
-          pip install pytest
+          pip install --no-cache-dir --upgrade pip
+          pip install poetry pytest
+          poetry config virtualenvs.create false
+          poetry install --no-root --no-interaction --no-ansi
 
       # Step 4: Run tests
       - name: Run Tests
