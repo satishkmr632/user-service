@@ -39,12 +39,12 @@ jobs:
           password: dckr_pat_4yrS-_70MHeGwucZ1tV9DfQ5DQY
 
       - name: Build Docker image
-        run: docker build -t stsdev46/user_service:latest .
+        run: docker build -t stsdev46/user-service:latest .
 
       # Step 7: Tag Docker image
       # - name: Tag Docker Image
-      #   run: docker tag user_service:latest stsdev46/user_service:latest
+      #   run: docker tag user-service:latest stsdev46/user-service:latest
 
       # Step 8: Push Docker image
       - name: Push Docker image
-        run: docker push stsdev46/user_service:latest
+        run: docker push stsdev46/user-service:latest
