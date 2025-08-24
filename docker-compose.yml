@@ -7,13 +7,13 @@ services:
     environment:
       POSTGRES_USER: satish
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: users
+      POSTGRES_DB: user_service_db
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U satish -d users"]
+      test: ["CMD-SHELL", "pg_isready -U satish -d user_service_db"]
       interval: 5s
       timeout: 5s
       retries: 5
