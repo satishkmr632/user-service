@@ -10,8 +10,8 @@ class User(Base):
     username: Mapped[str] = mapped_column(String, nullable=True)
     email: Mapped[str] = mapped_column(String, unique=True, index=True)
 
-    profile = relationship("UserProfile", uselist=False, back_populates="user")
-    roles = relationship("Role", secondary=user_roles, back_populates="users")
+    profile: Mapped["UserProfile"] = relationship("UserProfile", uselist=False, back_populates="user", cascade="all, delete")
+    roles: Mapped["Role"] = relationship("Role", secondary=user_roles, back_populates="users")
 
 class UserInDB(User):
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)

@@ -5,8 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from src.user_service.models.user import User
 from src.user_service.db.session import Base
+from src.user_service import models
 from src.user_service.core.config import settings
 
 # this is the Alembic Config object, which provides
@@ -23,6 +23,8 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
+
+print("target_metadata", target_metadata.__dict__)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -42,7 +44,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    print(".......settings.database_url", settings.database_url)
+
     url = config.get_main_option("sqlalchemy.url", settings.database_url)
     context.configure(
         url=url,

@@ -17,3 +17,4 @@ class Role(Base):
     name: Mapped[str] = mapped_column(String)
 
     users = relationship('User', secondary=user_roles, back_populates='roles')
+    
