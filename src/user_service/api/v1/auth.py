@@ -1,8 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import Annotated
-from src.user_service.schemas.user import UserCreate, UserRead, Token
+from src.user_service.schemas.user import UserCreate, Token
 from src.user_service.db.session import get_db
 from src.user_service.core.security import create_access_token
 from src.user_service.schemas.user import LoginRequest

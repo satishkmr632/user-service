@@ -1,6 +1,4 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from typing import Annotated
 from src.user_service.schemas.user import UserCreate, UserRead
 from src.user_service.models.user import User
 from src.user_service.core.dependencies import get_current_user
